@@ -1,7 +1,7 @@
 {
   "name": "github-url-resolver",
   "main": "./lib/github-url-resolver",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Resolves GitHub URLs to markdown links",
   "keywords": [
     "github",
