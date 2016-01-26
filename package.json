@@ -1,0 +1,21 @@
+{
+  "name": "github-url-resolver",
+  "main": "./lib/github-url-resolver",
+  "version": "0.0.0",
+  "description": "Resolves GitHub URLs to markdown links",
+  "keywords": [
+    "github",
+    "markdown"
+  ],
+  "activationCommands": {
+    "atom-workspace": "github-url-resolver:resolve-urls"
+  },
+  "repository": "https://github.com/benogle/github-url-resolver",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "github": "^0.2.4"
+  }
+}
