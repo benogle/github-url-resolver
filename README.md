@@ -16,4 +16,4 @@ https://github.com/username/repo/issues/234
 
 ### Private repo access
 
-Creating an access token (read only!) and setting it in the `GITHUB_ACCESS_TOKEN` will allow this to work on private github repos.
+Creating an access token (read only!) and setting it in the `GITHUB_ACCESS_TOKEN` environment variable will allow this to work on private github repos.
