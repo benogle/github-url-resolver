@@ -17,7 +17,10 @@ module.exports =
     urls = @extractURLs(text)
     @fetchTitles(urls).then (titles) ->
       text.replace GitHubURLRegex, (wholeMatch) ->
-        "[#{titles[wholeMatch]}](#{urls[wholeMatch].url})"
+        if titles[wholeMatch]?
+          "[#{titles[wholeMatch]}](#{urls[wholeMatch].url})"
+        else
+          wholeMatch
 
   fetchTitles: (matches) ->
     titles = {}
