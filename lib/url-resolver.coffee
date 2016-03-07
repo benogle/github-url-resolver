@@ -48,7 +48,9 @@ module.exports =
     matchToURL = {}
     matches = text.match(GitHubURLRegex)
     for match in matches
-      [wholeMatch, urlUser, urlRepo, urlNumber, issueUser, issueRepo, issueNumber] = @matchIssue(match)
+      execMatch = @matchIssue(match)
+      continue unless execMatch?
+      [wholeMatch, urlUser, urlRepo, urlNumber, issueUser, issueRepo, issueNumber] = execMatch
       result = {}
       result.url = if urlUser?
         result.user = urlUser
