@@ -1,5 +1,5 @@
 GithubApi = require 'github'
-GitHubURLRegex = new RegExp("(?:(?:https?://)?github.com/([^/]+)/([^/]+)/(?:pull|issues)/(\\d+))|(?:([\\w0-9_-]+)/([^#]+)#(\\d+))", "g")
+GitHubURLRegex = new RegExp("(?:(?:https?://)?github.com/([^/\\s]+)/([^/\\s]+)/(?:pull|issues)/(\\d+))|(?:([\\w0-9_-]+)/([^#\\s]+)#(\\d+))", "g")
 
 github = new GithubApi
   version: '3.0.0',
