@@ -47,27 +47,60 @@ describe "GithubURLResolver", ->
         * http://github.com/atom/find/pull/30
         * atom/find#20
         * another
+        * someuser/somerepo
       """
 
       expect(urls['http://github.com/atom/find/pull/30'].url).toEqual 'https://github.com/atom/find/issues/30'
       expect(urls['atom/find#20'].url).toEqual 'https://github.com/atom/find/issues/20'
 
   describe "resolveURLsInString()", ->
-    beforeEach ->
-      spyOn(URLResolver, 'fetchTitle').andCallFake (issueData) ->
-        num = issueData.url.match(/\d+$/)[0]
-        Promise.resolve("Issue number #{num}")
+    describe "when fetchTitle succeeds", ->
+      beforeEach ->
+        spyOn(URLResolver, 'fetchTitle').andCallFake (issueData) ->
+          num = issueData.url.match(/\d+$/)[0]
+          Promise.resolve("Issue number #{num}")
 
-    it "replaces URLs", ->
-      urls = """
-        atom/find#20
-        http://github.com/atom/find/pull/30
-        github.com/atom/find/issues/40
-      """
-
-      URLResolver.resolveURLsInString(urls).then (newString) ->
-        expect(newString).toEqual """
-          [Issue number 20](https://github.com/atom/find/issues/20)
-          [Issue number 30](https://github.com/atom/find/issues/30)
-          [Issue number 40](https://github.com/atom/find/issues/40)
+      it "replaces URLs", ->
+        urls = """
+          atom/find#20
+          http://github.com/atom/find/pull/30
+          github.com/atom/find/issues/40
+          someuser/somerepo
+          word
+          word#23
         """
+
+        URLResolver.resolveURLsInString(urls).then (newString) ->
+          expect(newString).toEqual """
+            [Issue number 20](https://github.com/atom/find/issues/20)
+            [Issue number 30](https://github.com/atom/find/issues/30)
+            [Issue number 40](https://github.com/atom/find/issues/40)
+            someuser/somerepo
+            word
+            word#23
+          """
+
+    describe "when fetchTitle fails", ->
+      beforeEach ->
+        spyOn(URLResolver, 'fetchTitle').andCallFake (issueData) ->
+          Promise.resolve(null)
+
+      it "replaces URLs", ->
+        urls = """
+          atom/find#20
+          http://github.com/atom/find/pull/30
+          github.com/atom/find/issues/40
+          someuser/somerepo
+          word
+          word#23
+        """
+
+        URLResolver.resolveURLsInString(urls).then (newString) ->
+          expect(newString).toEqual """
+            atom/find#20
+            http://github.com/atom/find/pull/30
+            github.com/atom/find/issues/40
+            someuser/somerepo
+            word
+            word#23
+          """
